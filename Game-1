@@ -1,0 +1,105 @@
+package calculator;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class game2 {
+    
+	public static void main(String[] args) {
+		Scanner in =new Scanner (System.in);
+		int red = 0, index=0, Energy=2, PrintInfo=2;
+		String a="", matrix [][] = {{"_","_","_","_","!","!","T","_","_"},
+				                    {"*","_","!","*","_","*","!","*","_"},
+				                    {"_","_","*","_","_","!","_","_","_"},
+				                    {"_","!","_","_","*","_","*","_","*"},
+				                    {"_","*","_","_","_","_","!","_","_"},
+				                    {"_","*","_","!","*","_","_","*","_"},
+				                    {"_","_","_","*","F","*","*","!","!"},
+				                    {"!","*","*","*","_","_","_","_","!"}};
+		
+		metod(a, matrix, red, index);
+		System.out.println("To go up use 'W', to go down use 'S'. To go left use 'A' and 'D' to go right \n"
+				+ "If you step on 'T' you gonna be teleported.");
+		System.err.println("Start: ");
+		 
+// Command buttons
+		for (int i = 0; i < 100; i++) {
+		  String comand = in.nextLine();	
+		
+		     	if(comand.equalsIgnoreCase("w")) {
+				 red -= 1;
+				 
+		    	}else if(comand.equalsIgnoreCase("d")) {
+				 index += 1;	
+                 
+		    	}else if(comand.equalsIgnoreCase("s")) {
+				 red += 1;
+				 
+		    	}else if(comand.equalsIgnoreCase("a")) {
+				 index -= 1;	
+				 
+		    	};
+			
+				 
+// If you win the game!	
+		if(matrix[red][index] == "F") {
+			System.out.println("You Win The Game!");
+		    metod(a, matrix, red, index);
+		    break; 
+		  }
+		
+// Teleportation
+		   	 else if (matrix[red][index]=="T") {
+		    		red=6; index=7; 
+		    		System.out.println("teleportation...");
+		    	    a=matrix[red][index]="!";
+                  }
+		
+	    if (matrix[red][index]== "!" & Energy <= 0) {
+			 System.out.println("You didn't survive...");
+		     break;    		     
+		  }
+		
+// If you step on a bomb...
+		     else if(matrix[red][index]=="*") {
+		        System.out.println("There was a bomb, you are fucked up Buddy...");
+		        metod(a, matrix, red, index);
+		    	break;
+		      }
+		 
+		
+// Sing to be careful (!), because you may die!
+    	if(matrix[red][index]=="!" & Energy > 0) {
+    		Energy--;
+    	 	System.out.println("watch out FOOL! "+ (Energy+1) +" more times and you are dead!");
+		for (int o = 0; o < matrix.length; o++) {
+		   	a=matrix[red][index]="o"; 
+		    a=matrix[red][index]="_"; 
+		  }	
+	    }
+	 	 
+		
+// Print option	
+    	
+		     else if(comand.equalsIgnoreCase("print") && PrintInfo > 0) {   
+		    	  PrintInfo--;  
+		    	  metod(a, matrix, red, index);
+  		          System.out.println("Ostavashta energiq = "+ Energy +"\n"
+		           + "Ostavashti spravki = "+PrintInfo);
+	  	     }
+		     
+	         else if(comand.equalsIgnoreCase("print") && PrintInfo == 0)  {
+  			        System.err.println("The maginc is over homie ;)");
+             }		    
+	      }
+	   }
+	
+// The matrix method	
+	public static void metod (String a, String matrix[][], int red, int index) {
+		for (int t = 0; t <matrix.length; t++) {
+		      a=matrix[red][index]="o"; 
+   	          System.out.println(Arrays.deepToString(matrix[t]));
+   	          a=matrix[red][index]="_";}
+		
+    }
+ }
